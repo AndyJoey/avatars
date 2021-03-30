@@ -4,7 +4,7 @@
 body {
     margin: 0; /* Убираем отступы */
     height: 100%; /* Высота страницы */
-    background-image: url("https://sun9-7.userapi.com/impg/2UITg5LuYdjjL8YrZcT7nLz4BkERBa-h4h06Mg/9wmaCiFAaDw.jpg?size=1920x1080&quality=96&sign=085c6b3a8e09f7b00a22d577f61b8b8b&type=album");
+    background-image: url("images/back.png");
     background-attachment: fixed;
     background-position: 0px 25px;
     background-repeat: no-repeat;
@@ -35,6 +35,21 @@ background: #4d5e80;
     background: #1f427f; 
 }
 
+.sboku {
+    margin-top: 10%;
+    margin-right: 1%;
+    float: right;
+    padding: 0px 12px;
+    border: 1px solid #253674;
+    background-color: #4d5e80;
+    opacity: 0.65;
+    width: 15%;
+    height: 580px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-shadow: 0px 0px 20px #364063 inset;
+}
+ 
 /* Добавьте черный цвет фона в верхнюю навигацию */
 .topnav {
     background-color: #223353;
@@ -66,7 +81,7 @@ background: #4d5e80;
     color: white;
 }
 
-/* Стиль вкладки с городами */
+/* Стиль вкладки управления */
 .tab {
     margin-top: 10%;
     margin-left: 10%;
@@ -139,6 +154,7 @@ h2 {
 }
 
 h4 {
+    color: #283871;
     font-family: "Comic Sans MS", cursive, sans-serif;
     font-size: 25px;
     text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF;
@@ -184,7 +200,9 @@ p {
   transition: .5s ease;
   opacity:0;
   color: white;
-  font-size: 20px;
+  font-family:Arial, Helvetica, sans-serif;
+ word-wrap: break-word;
+  font-size: 16px;
   padding: 20px;
   text-align: center;
 }
@@ -192,4 +210,8 @@ p {
 /* Когда вы наводите указатель мыши на контейнер, исчезает заголовок наложения */
 .container:hover .overlay {
   opacity: 1;
+}
+
+.free{
+display: flex;
 }
