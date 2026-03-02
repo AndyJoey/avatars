@@ -1,0 +1,2758 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+	<link rel="stylesheet" href="styles.css">
+	<title>Stream Avatars</title>
+</head>
+<body>
+    <div class="container">
+        <!-- 
+        ════════════════════════════════════════════════════════════════════════════════════════════════
+        📌 ЛЕВОЕ МЕНЮ НАВИГАЦИИ
+        ════════════════════════════════════════════════════════════════════════════════════════════════
+        -->
+        <div class="sidebar">
+            <h2>Навигация</h2>
+            <ul class="nav-links">
+                <li><a href="#" class="active" onclick="showSection('avatars')">Редактор</a></li>
+				<li><a href="#" onclick="showSection('description')">Описание</a></li>
+                <li><a href="#" onclick="showSection('controls')">Управление</a></li>
+                <li><a href="#" onclick="showSection('commands')">Команды</a></li>
+                <li><a href="#" onclick="showSection('bosses')">Битва с боссом</a></li>
+                <li><a href="#" onclick="showSection('minigames')">Мини-игры</a></li>
+            </ul>
+        </div>
+        
+        <!-- 
+        ════════════════════════════════════════════════════════════════════════════════════════════════
+        📌 ОСНОВНОЙ КОНТЕНТ
+        ════════════════════════════════════════════════════════════════════════════════════════════════
+        
+        💡 КАК ДОБАВИТЬ НОВУЮ СЕКЦИЮ:
+        1. Скопируйте блок <div id="..." class="section">...</div>
+        2. Замените id на уникальный идентификатор (должен совпадать с тем, что в меню)
+        3. Замените содержимое на ваш текст/изображения
+        4. Убедитесь, что в меню есть соответствующий пункт
+        
+        💡 КАК ИЗМЕНИТЬ СОДЕРЖИМОЕ СЕКЦИИ:
+        Просто отредактируйте текст или добавьте новые элементы внутри блока .section
+        -->
+        <div class="main-content">
+            <div class="header">
+				<h1 class="page-title">
+					<span class="visually-hidden">Stream Avatars</span>
+				</h1>
+			</div>
+            
+            <!-- ====== СЕКЦИЯ "ОПИСАНИЕ" ====== -->
+            <div id="description" class="section">
+                <div class="section-title">
+                    <h2>Описание</h2>
+                </div>
+				<div class="description-content">
+						
+						<p>
+							Stream Avatars — это интерактивное расширение для Twitch, которое позволяет зрителям получить собственного аватара на экране стрима. 
+							Ничего скачивать не нужно — достаточно выполнить несколько простых шагов:
+						</p>
+
+						<p>
+							1. Нажмите Follow 💜 на канале Twitch. <br>
+							2. Откройте окно Stream Avatars под стримом.<br>
+							&nbsp;&nbsp;&nbsp;Если вы смотрите с мобильного устройства, нажмите на кнопку расширения в верхнем углу чата.<br>
+							3. Авторизуйтесь через Twitch.
+					
+							<button class="details-toggle">Подробнее</button>
+						</p>
+
+						<div class="details-images">
+							<img src="images/other/step1.png" alt="Шаг 1">
+							<img src="images/other/step2.png" alt="Шаг 2">
+						</div>
+						<div class="description-divider"></div>
+						<p>
+							После подключения на экране стрима появится ваш аватар-пони.
+							Предметы для него покупаются за голду — она автоматически начисляется за просмотр трансляции и активность в чате.
+							Каждые 5 минут просмотра приносят вам 5 голды.
+						</p>
+
+						<p>Дополнительные бонусы:</p>
+						
+						<ul>
+							<li>регулярные зрители (+10)</li>
+							<li>подписчики (+3)</li>
+							<li>модераторы (+4)</li>
+							<li>активные в чате (+3)</li>
+						</ul>
+						
+						<p>
+							Дополнительную голду можно заработать, участвуя в мини-играх и дуэлях.
+						</p>
+
+						<p>
+							Во время участия в играх и сражений с боссами могут выпадать сокровищницы с редкими предметами.
+							Также существуют праздничные сокровищницы, которые доступны только во время особых событий.
+						</p>
+
+						<p>
+							На этой странице доступен демонстрационный редактор, где вы можете ознакомиться со всеми существующими предметами и примерить их на аватаре.
+							Он не заменяет интерфейс расширения на Twitch.
+						</p>
+
+					</div>
+            </div>
+            
+            <!-- ====== СЕКЦИЯ "АВАТАРЫ" ====== -->
+            <div id="avatars" class="section active">
+                <div class="section-title">
+                    <h2>Редактор Аватара</h2>
+                </div>
+                
+                <!-- РЕДАКТОР АВАТАРА -->
+                <div class="avatar-editor">
+
+					<div class="editor-layout">
+                    <div class="avatar-preview-container">
+                        <!-- 
+                        💡 КАК ЗАМЕНИТЬ ИЗОБРАЖЕНИЕ ПОНИ:
+                        1. Замените значение атрибута src на путь к вашему изображению
+                        2. Убедитесь, что изображение имеет размер 105x105 пикселей
+                        3. Изображение будет автоматически растянуто до 210x210 без размытия
+                        -->
+                        <img src="images/base/pony.png" 
+                             alt="Пони" 
+							  class="avatar-layer"
+							  id="layer-base">
+						  <img src="images/head/0.png"
+							   alt="Голова"
+							   class="avatar-layer"
+							   id="layer-head">
+						  <img src="images/ears/00.png"
+							   alt="Уши"
+							   class="avatar-layer"
+							   id="layer-ears">
+						  <img src="images/eyes/00.png"
+							   alt="Глаза"
+							   class="avatar-layer"
+							   id="layer-eyes">
+						  <img src="images/color-eyes/00.png"
+							   alt="Цвет глаз"
+							   class="avatar-layer"
+							   id="layer-color-eyes">
+						  <img src=""
+							   alt="Грива"
+							   class="avatar-layer"
+							   id="layer-mane">
+						  <img src=""
+							   alt="Хвост"
+							   class="avatar-layer"
+							   id="layer-tail">
+						  <img src=""
+							   alt="Одежда"
+							   class="avatar-layer"
+							   id="layer-clothes">
+						  <img src=""
+							   alt="Шапка"
+							   class="avatar-layer"
+							   id="layer-hats">
+						  <img src=""
+							   alt="Аксессуары"
+							   class="avatar-layer"
+							   id="layer-accessories">
+						  <img src=""
+							   alt="Рога"
+							   class="avatar-layer"
+							   id="layer-horns">
+						  <img src=""
+							   alt="Крылья"
+							   class="avatar-layer"
+							   id="layer-wings">
+                    </div>
+
+					<div class="editor-buttons">
+
+						<button class="editor-icon-btn"
+								onclick="resetCharacter()"
+								title="Сбросить">
+							<img src="images/ui/icon_reset.png" alt="reset">
+						</button>
+
+						<button class="editor-icon-btn"
+								onclick="randomizeCharacter()"
+								title="Случайно">
+							<img src="images/ui/icon_random.png" alt="random">
+						</button>
+						<button class="editor-icon-btn" onclick="downloadAvatar()" title="Скачать">
+						  <img src="images/ui/icon_download.png" alt="download">
+						</button>
+					</div>
+					
+					</div>
+                </div>
+                
+                <!-- ПАНЕЛЬ ПЕРЕКЛЮЧАЕМЫХ БЛОКОВ -->
+                <div class="tabs-container">
+                    <div class="tabs">
+                        <!-- 
+                        💡 КАК ДОБАВИТЬ НОВУЮ ВКЛАДКУ:
+                        1. Скопируйте строку <div class="tab" onclick="showTab('id')">Название</div>
+                        2. Замените 'id' на уникальный идентификатор вкладки
+                        3. Замените "Название" на текст вкладки
+                        4. Создайте соответствующий блок контента ниже (см. примеры)
+                        -->
+					<div class="tab" id="tab-head" onclick="showTab('head')">
+						head
+						<span class="remove-btn" onclick="removeItem('head'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-ears" onclick="showTab('ears')">
+						ears
+						<span class="remove-btn" onclick="removeItem('ears'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-eyes" onclick="showTab('eyes')">
+						eyes
+						<span class="remove-btn" onclick="removeItem('eyes'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-color-eyes" onclick="showTab('color-eyes')">
+						color eyes
+						<span class="remove-btn" onclick="removeItem('color-eyes'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab active" id="tab-mane" onclick="showTab('mane')">
+						mane
+						<span class="remove-btn" onclick="removeItem('mane'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-tail" onclick="showTab('tail')">
+						tail
+						<span class="remove-btn" onclick="removeItem('tail'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-clothes" onclick="showTab('clothes')">
+						clothes
+						<span class="remove-btn" onclick="removeItem('clothes'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-hats" onclick="showTab('hats')">
+						hats
+						<span class="remove-btn" onclick="removeItem('hats'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-accessories" onclick="showTab('accessories')">
+						accessories
+						<span class="remove-btn" onclick="removeItem('accessories'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-horns" onclick="showTab('horns')">
+						horns
+						<span class="remove-btn" onclick="removeItem('horns'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-wings" onclick="showTab('wings')">
+						wings
+						<span class="remove-btn" onclick="removeItem('wings'); event.stopPropagation();">✕</span>
+					</div>
+
+					<div class="tab" id="tab-treasuries" onclick="showTab('treasuries')">
+						treasuries
+						<span class="remove-btn" onclick="removeItem('treasuries'); event.stopPropagation();">✕</span>
+					</div>
+                    </div>
+                    
+                    <!-- 
+                    ════════════════════════════════════════════════════════════════════════════════════════
+                    💡 КАК ДОБАВИТЬ НОВЫЙ БЛОК С ИЗОБРАЖЕНИЯМИ:
+                    1. Скопируйте блок <div id="..." class="tab-content">...</div>
+                    2. Замените id на уникальный идентификатор (должен совпадать с тем, что в кнопке вкладки)
+                    3. Замените содержимое на ваши изображения
+                    4. Убедитесь, что все изображения имеют размер 105x105 пикселей
+                    ════════════════════════════════════════════════════════════════════════════════════════
+                    -->
+                    
+                    <!-- БЛОК 1: head -->
+                    <div id="head" class="tab-content">
+                        <div class="price-grid">
+                            <!-- 
+                            💡 КАК ДОБАВИТЬ НОВЫЙ БЛОК С ИЗОБРАЖЕНИЕМ:
+                            1. Скопируйте блок <div class="price-item">...</div>
+                            2. Замените значение атрибута src на путь к вашему изображению
+                            3. Замените значение атрибута alt на описание изображения
+                            4. Убедитесь, что изображение имеет размер 105x105 пикселей
+                            -->
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/0.png" alt="0"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/1.png" alt="1"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/2.png" alt="2"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/3.png" alt="3"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/4.png" alt="4"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/5.png" alt="5"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/6.png" alt="6"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/7.png" alt="7"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/8.png" alt="8"
+								onclick="selectItem('head', this.src)">
+                            </div>
+                           
+                            <div class="price-item" data-pony-background="true">
+                                <img src="images/head/11.png" alt="11"
+								onclick="selectItem('head', this.src)">
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 2: ears -->
+                    <div id="ears" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/00.png" alt="00"
+								onclick="selectItem('ears', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/01.png" alt="01"
+								onclick="selectItem('ears', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/02.png" alt="02"
+								onclick="selectItem('ears', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/03.png" alt="03"
+								onclick="selectItem('ears', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/04.png" alt="04"
+								onclick="selectItem('ears', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/05.png" alt="05"
+								onclick="selectItem('ears', this.src)">
+                            </div>     
+							 <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/06.png" alt="06"
+								onclick="selectItem('ears', this.src)">
+                            </div>  
+							 <div class="price-item" data-pony-background="alt">
+                                <img src="images/ears/07.png" alt="07"
+								onclick="selectItem('ears', this.src)">
+                            </div>  
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 3: eyes -->
+                    <div id="eyes" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/eyes/00.png" alt="00"
+								onclick="selectItem('eyes', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/01.png" alt="01" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/02.png" alt="02" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/03.png" alt="03" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/04.png" alt="04" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/05.png" alt="05" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/06.png" alt="06" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/07.png" alt="07" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/08.png" alt="08" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/09.png" alt="09" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/10.png" alt="10" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/11.png" alt="11" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/13.png" alt="13" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/14.png" alt="14" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/celestia.png" alt="celestia" onclick="selectItem('eyes', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/eyes/luna.png" alt="luna" onclick="selectItem('eyes', this.src)">
+							</div>
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 4: color-eyes -->
+                    <div id="color-eyes" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item">
+                              <img src="images/color-eyes/00.png" alt="00" onclick="selectItem('color-eyes', this.src)">
+                            </div>
+                            <div class="price-item">
+							  <img src="images/color-eyes/01.png" alt="01" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/02.png" alt="02" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/03.png" alt="03" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/04.png" alt="04" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/05.png" alt="05" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/06.png" alt="06" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/07.png" alt="07" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/08.png" alt="08" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/09.png" alt="09" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/10.png" alt="10" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/11.png" alt="11" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/12.png" alt="12" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/13.png" alt="13" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/14.png" alt="14" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/15.png" alt="15" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/16.png" alt="16" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/17.png" alt="17" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/18.png" alt="18" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/19.png" alt="19" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/20.png" alt="20" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/21.png" alt="21" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/22.png" alt="22" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/23.png" alt="23" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/24.png" alt="24" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/25.png" alt="25" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/26.png" alt="26" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/27.png" alt="27" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/28.png" alt="28" onclick="selectItem('color-eyes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/color-eyes/29.png" alt="29" onclick="selectItem('color-eyes', this.src)">
+							</div>
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 5: mane -->
+					<div id="mane" class="tab-content  active">
+					  <!-- Горизонтальные кнопки для выбора цвета -->
+					  <div class="color-tabs">
+						<div class="color-tab active" onclick="showColor('color1', 'mane')">Основной</div>
+						<div class="color-tab" onclick="showColor('color2', 'mane')">Белый</div>
+						<div class="color-tab" onclick="showColor('color3', 'mane')">Рыжий</div>
+						<div class="color-tab" onclick="showColor('color4', 'mane')">Синий</div>
+						<div class="color-tab" onclick="showColor('color5', 'mane')">Салатовый</div>
+						<div class="color-tab" onclick="showColor('color6', 'mane')">Кремовый</div>
+						<div class="color-tab" onclick="showColor('color7', 'mane')">Зеленый</div>
+					  </div>
+					  
+					  <!-- Цвет 1 -->
+					  <div id="color1" class="color-content active">
+						<div class="price-grid">
+						  <div class="price-item">
+							  <img src="images/mane/color1/general01.png" alt="general01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general02.png" alt="general02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general03.png" alt="general03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general04.png" alt="general04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general05.png" alt="general05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general06.png" alt="general06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general07.png" alt="general07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general08.png" alt="general08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general09.png" alt="general09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general10.png" alt="general10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general11.png" alt="general11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general12.png" alt="general12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general13.png" alt="general13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general14.png" alt="general14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general15.png" alt="general15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general16.png" alt="general16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general17.png" alt="general17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general18.png" alt="general18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color1/general19.png" alt="general19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+						</div>
+					  </div>
+					  
+					  <!-- Цвет 2 -->
+					  <div id="color2" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/mane/color2/white01.png" alt="white01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white02.png" alt="white02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white03.png" alt="white03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white04.png" alt="white04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white05.png" alt="white05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white06.png" alt="white06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white07.png" alt="white07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white08.png" alt="white08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white09.png" alt="white09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white10.png" alt="white10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white11.png" alt="white11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white12.png" alt="white12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white13.png" alt="white13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white14.png" alt="white14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white15.png" alt="white15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white16.png" alt="white16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white17.png" alt="white17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white18.png" alt="white18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white19.png" alt="white19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color2/white20.png" alt="white20" onclick="selectItem('mane', this.src)">
+							</div>
+						  </div>
+						</div>
+					  
+					  <!-- Цвет 3 -->
+					  <div id="color3" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/mane/color3/orange01.png" alt="orange01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange02.png" alt="orange02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange03.png" alt="orange03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange04.png" alt="orange04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange05.png" alt="orange05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange06.png" alt="orange06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange07.png" alt="orange07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange08.png" alt="orange08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange09.png" alt="orange09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange10.png" alt="orange10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange11.png" alt="orange11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange12.png" alt="orange12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange13.png" alt="orange13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange14.png" alt="orange14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange15.png" alt="orange15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange16.png" alt="orange16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange17.png" alt="orange17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange18.png" alt="orange18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange19.png" alt="orange19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color3/orange20.png" alt="orange20" onclick="selectItem('mane', this.src)">
+							</div>
+						  </div>
+						</div>
+					  
+					  <!-- Цвет 4 -->
+					  <div id="color4" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/mane/color4/blue01.png" alt="blue01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue02.png" alt="blue02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue03.png" alt="blue03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue04.png" alt="blue04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue05.png" alt="blue05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue06.png" alt="blue06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue07.png" alt="blue07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue08.png" alt="blue08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue09.png" alt="blue09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue10.png" alt="blue10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue11.png" alt="blue11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue12.png" alt="blue12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue13.png" alt="blue13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue14.png" alt="blue14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue15.png" alt="blue15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue16.png" alt="blue16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue17.png" alt="blue17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue18.png" alt="blue18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue19.png" alt="blue19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color4/blue20.png" alt="blue20" onclick="selectItem('mane', this.src)">
+							</div>
+						  </div>
+						</div>
+					  
+					  <!-- Цвет 5 -->
+					  <div id="color5" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/mane/color5/green01.png" alt="green01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green02.png" alt="green02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green03.png" alt="green03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green04.png" alt="green04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green05.png" alt="green05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green06.png" alt="green06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green07.png" alt="green07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green08.png" alt="green08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green09.png" alt="green09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green10.png" alt="green10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green11.png" alt="green11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green12.png" alt="green12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green13.png" alt="green13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green14.png" alt="green14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green15.png" alt="green15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green16.png" alt="green16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green17.png" alt="green17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green18.png" alt="green18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green19.png" alt="green19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color5/green20.png" alt="green20" onclick="selectItem('mane', this.src)">
+							</div>
+						  </div>
+						</div>
+					  
+					  <!-- Цвет 6 -->
+					  <div id="color6" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/mane/color6/cream01.png" alt="cream01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream02.png" alt="cream02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream03.png" alt="cream03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream04.png" alt="cream04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream05.png" alt="cream05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream06.png" alt="cream06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream07.png" alt="cream07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream08.png" alt="cream08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream09.png" alt="cream09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream10.png" alt="cream10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream11.png" alt="cream11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream12.png" alt="cream12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream13.png" alt="cream13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream14.png" alt="cream14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream15.png" alt="cream15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream16.png" alt="cream16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream17.png" alt="cream17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream18.png" alt="cream18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream19.png" alt="cream19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color6/cream20.png" alt="cream20" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+						  </div>
+						</div>
+					  
+					  <!-- Цвет 7 -->
+					  <div id="color7" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium01.png" alt="heliotropium01" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium02.png" alt="heliotropium02" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium03.png" alt="heliotropium03" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium04.png" alt="heliotropium04" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium05.png" alt="heliotropium05" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium06.png" alt="heliotropium06" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium07.png" alt="heliotropium07" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium08.png" alt="heliotropium08" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium09.png" alt="heliotropium09" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium10.png" alt="heliotropium10" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium11.png" alt="heliotropium11" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium12.png" alt="heliotropium12" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium13.png" alt="heliotropium13" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium14.png" alt="heliotropium14" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium15.png" alt="heliotropium15" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium16.png" alt="heliotropium16" onclick="selectItem('mane', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium17.png" alt="heliotropium17" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium18.png" alt="heliotropium18" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium19.png" alt="heliotropium19" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/mane/color7/heliotropium20.png" alt="heliotropium20" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							</div>
+						  </div>
+						</div>
+								  
+					  <!-- Цвет 8 --> 
+					</div>
+				
+                    
+                    <!-- БЛОК 6: tail -->
+                    <div id="tail" class="tab-content">
+					  <!-- Горизонтальные кнопки для выбора цвета -->
+					  <div class="color-tabs">
+						<div class="color-tab active" onclick="showColor('tail-color1', 'tail')">Основной</div>
+						<div class="color-tab" onclick="showColor('tail-color2', 'tail')">Белый</div>
+						<div class="color-tab" onclick="showColor('tail-color3', 'tail')">Рыжий</div>
+						<div class="color-tab" onclick="showColor('tail-color4', 'tail')">Синий</div>
+						<div class="color-tab" onclick="showColor('tail-color5', 'tail')">Салатовый</div>
+						<div class="color-tab" onclick="showColor('tail-color6', 'tail')">Кремовый</div>
+						<div class="color-tab" onclick="showColor('tail-color7', 'tail')">Зеленый</div>
+					  </div>
+					  
+					  <!-- Цвет 1 -->
+						<div id="tail-color1" class="color-content active">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color1/general01.png" alt="general01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general02.png" alt="general02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general03.png" alt="general03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general04.png" alt="general04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general05.png" alt="general05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general06.png" alt="general06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general07.png" alt="general07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general08.png" alt="general08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general09.png" alt="general09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general10.png" alt="general10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general11.png" alt="general11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general12.png" alt="general12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general13.png" alt="general13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general14.png" alt="general14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general15.png" alt="general15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general16.png" alt="general16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general17.png" alt="general17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general18.png" alt="general18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color1/general19.png" alt="general19" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+
+						<!-- Цвет 2 -->
+						<div id="tail-color2" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color2/white01.png" alt="white01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white02.png" alt="white02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white03.png" alt="white03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white04.png" alt="white04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white05.png" alt="white05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white06.png" alt="white06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white07.png" alt="white07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white08.png" alt="white08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white09.png" alt="white09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white10.png" alt="white10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white11.png" alt="white11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white12.png" alt="white12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white13.png" alt="white13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white14.png" alt="white14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white15.png" alt="white15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white16.png" alt="white16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white17.png" alt="white17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white18.png" alt="white18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white19.png" alt="white19" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color2/white20.png" alt="white20" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+
+						<!-- Цвет 3 -->
+						<div id="tail-color3" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color3/orange01.png" alt="orange01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange02.png" alt="orange02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange03.png" alt="orange03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange04.png" alt="orange04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange05.png" alt="orange05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange06.png" alt="orange06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange07.png" alt="orange07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange08.png" alt="orange08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange09.png" alt="orange09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange10.png" alt="orange10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange11.png" alt="orange11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange12.png" alt="orange12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange13.png" alt="orange13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange14.png" alt="orange14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange15.png" alt="orange15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange16.png" alt="orange16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange17.png" alt="orange17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange18.png" alt="orange18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange19.png" alt="orange19" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color3/orange20.png" alt="orange20" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+
+						<!-- Цвет 4 -->
+						<div id="tail-color4" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color4/blue01.png" alt="blue01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue02.png" alt="blue02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue03.png" alt="blue03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue04.png" alt="blue04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue05.png" alt="blue05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue06.png" alt="blue06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue07.png" alt="blue07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue08.png" alt="blue08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue09.png" alt="blue09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue10.png" alt="blue10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue11.png" alt="blue11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue12.png" alt="blue12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue13.png" alt="blue13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue14.png" alt="blue14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue15.png" alt="blue15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue16.png" alt="blue16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue17.png" alt="blue17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue18.png" alt="blue18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue19.png" alt="blue19" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color4/blue20.png" alt="blue20" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+
+						<!-- Цвет 5 -->
+						<div id="tail-color5" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color5/green01.png" alt="green01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green02.png" alt="green02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green03.png" alt="green03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green04.png" alt="green04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green05.png" alt="green05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green06.png" alt="green06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green07.png" alt="green07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green08.png" alt="green08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green09.png" alt="green09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green10.png" alt="green10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green11.png" alt="green11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green12.png" alt="green12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green13.png" alt="green13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green14.png" alt="green14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green15.png" alt="green15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green16.png" alt="green16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green17.png" alt="green17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green18.png" alt="green18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green19.png" alt="green19" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color5/green20.png" alt="green20" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+
+						<!-- Цвет 6 -->
+						<div id="tail-color6" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color6/cream01.png" alt="cream01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream02.png" alt="cream02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream03.png" alt="cream03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream04.png" alt="cream04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream05.png" alt="cream05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream06.png" alt="cream06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream07.png" alt="cream07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream08.png" alt="cream08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream09.png" alt="cream09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream10.png" alt="cream10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream11.png" alt="cream11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream12.png" alt="cream12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream13.png" alt="cream13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream14.png" alt="cream14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream15.png" alt="cream15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream16.png" alt="cream16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream17.png" alt="cream17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream18.png" alt="cream18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream19.png" alt="cream19" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color6/cream20.png" alt="cream20" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+
+						<!-- Цвет 7 -->
+						<div id="tail-color7" class="color-content">
+						  <div class="price-grid">
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium01.png" alt="heliotropium01" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium02.png" alt="heliotropium02" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium03.png" alt="heliotropium03" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium04.png" alt="heliotropium04" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium05.png" alt="heliotropium05" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium06.png" alt="heliotropium06" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium07.png" alt="heliotropium07" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium08.png" alt="heliotropium08" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium09.png" alt="heliotropium09" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium10.png" alt="heliotropium10" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium11.png" alt="heliotropium11" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium12.png" alt="heliotropium12" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium13.png" alt="heliotropium13" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium14.png" alt="heliotropium14" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium15.png" alt="heliotropium15" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium16.png" alt="heliotropium16" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium17.png" alt="heliotropium17" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium18.png" alt="heliotropium18" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium19.png" alt="heliotropium19" onclick="selectItem('tail', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/tail/color7/heliotropium20.png" alt="heliotropium20" onclick="selectItem('tail', this.src)">
+							</div>
+						  </div>
+						</div>
+					  
+				 </div>
+                    
+                    <!-- БЛОК 7: clothes -->
+                    <div id="clothes" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item">
+                                <img src="images/clothes/00.png" alt="00"
+								onclick="selectItem('clothes', this.src)">
+                            </div>
+                            <div class="price-item">
+							  <img src="images/clothes/01.png" alt="01" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/02.png" alt="02" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/03.png" alt="03" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/04.png" alt="04" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/05.png" alt="05" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/06.png" alt="06" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/07.png" alt="07" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/08.png" alt="08" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/09.png" alt="09" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/10.png" alt="10" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/11.png" alt="11" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/12.png" alt="12" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/13.png" alt="13" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/14.png" alt="14" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/15.png" alt="15" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/16.png" alt="16" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/17.png" alt="17" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/18.png" alt="18" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/19.png" alt="19" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/20.png" alt="20" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/21.png" alt="21" onclick="selectItem('clothes', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/clothes/22.png" alt="22" onclick="selectItem('clothes', this.src)">
+							</div>
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 8: hats -->
+                    <div id="hats" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item">
+                                <img src="images/hats/00.png" alt="00"
+								onclick="selectItem('hats', this.src, 'low-zindex')">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/hats/01.png" alt="01"
+								onclick="selectItem('hats', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/hats/02.png" alt="02"
+								onclick="selectItem('hats', this.src)">
+                            </div>
+                            <div class="price-item">
+							  <img src="images/hats/03.png" alt="03" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/04.png" alt="04" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/05.png" alt="05" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/06.png" alt="06" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/07.png" alt="07" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/08.png" alt="08" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/09.png" alt="09" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/10.png" alt="10" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/11.png" alt="11" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/12.png" alt="12" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/13.png" alt="13" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/14.png" alt="14" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/15.png" alt="15" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/16.png" alt="16" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/17.png" alt="17" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/19.png" alt="19" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/20.png" alt="20" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/21.png" alt="21" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/22.png" alt="22" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/23.png" alt="23" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/24.png" alt="24" onclick="selectItem('hats', this.src)">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/25.png" alt="25" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+							<div class="price-item">
+							  <img src="images/hats/26.png" alt="26" onclick="selectItem('hats', this.src)">
+							</div>
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 9: accessories -->
+                    <div id="accessories" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item">
+                                <img src="images/accessories/00.png" alt="00"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/01.png" alt="01"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/02.png" alt="02"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/03.png" alt="03"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/04.png" alt="04"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/05.png" alt="05"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/06.png" alt="06"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                            <div class="price-item">
+                                <img src="images/accessories/07.png" alt="07"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+							<div class="price-item">
+                                <img src="images/accessories/08.png" alt="08"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+							<div class="price-item">
+                                <img src="images/accessories/09.png" alt="09"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+							<div class="price-item">
+                                <img src="images/accessories/11.png" alt="11"
+								onclick="selectItem('accessories', this.src)">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 10: horns -->
+                    <div id="horns" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/horns/00.png" alt="00"
+								onclick="selectItem('horns', this.src)">
+                            </div>
+                            <div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/01.png" alt="01" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/02.png" alt="02" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/03.png" alt="03" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/04.png" alt="04" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/05.png" alt="05" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/06.png" alt="06" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/07.png" alt="07" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/08.png" alt="08" onclick="selectItem('horns', this.src)">
+							</div>
+							<div class="price-item" data-pony-background="alt">
+							  <img src="images/horns/09.png" alt="09" onclick="selectItem('horns', this.src)">
+							</div>
+                        </div>
+                    </div>
+                    
+                    <!-- БЛОК 11: wings -->
+                    <div id="wings" class="tab-content">
+                        <div class="price-grid">
+                            <div class="price-item" data-pony-background="alt">
+                                <img src="images/wings/00.png" alt="00"
+								onclick="selectItem('wings', this.src)">
+                            </div>
+                             <div class="price-item" data-pony-background="alt">
+                                <img src="images/wings/01.png" alt="00"
+								onclick="selectItem('wings', this.src)">
+                            </div>
+							 <div class="price-item" data-pony-background="alt">
+                                <img src="images/wings/02.png" alt="00"
+								onclick="selectItem('wings', this.src)">
+                            </div>
+							 <div class="price-item" data-pony-background="alt">
+                                <img src="images/wings/04.png" alt="00"
+								onclick="selectItem('wings', this.src)">
+                            </div>
+                        </div>
+                    </div>
+					<!-- БЛОК 12: treasuries -->
+					<div id="treasuries" class="tab-content">
+					<!-- Горизонтальные кнопки для выбора категории -->
+					  <div class="color-tabs">
+						<div class="color-tab active" onclick="showColor('treasury-common')">Common</div>
+						<div class="color-tab" onclick="showColor('treasury-uncommon')">Uncommon</div>
+						<div class="color-tab" onclick="showColor('treasury-rare')">Rare</div>
+						<div class="color-tab" onclick="showColor('treasury-mythical')">Mythical</div>
+						<div class="color-tab" onclick="showColor('treasury-legendary')">Legendary</div>
+						<div class="color-tab" onclick="showColor('treasury-immortal')">Immortal</div>
+						<div class="color-tab" onclick="showColor('treasury-arcana')">Arcana</div>
+						<div class="color-tab" onclick="showColor('treasury-halloween')">Halloween</div>
+						<div class="color-tab" onclick="showColor('treasury-valentine')">Valentine's day</div>
+						<div class="color-tab" onclick="showColor('treasury-twitch-hype')">Twitch Hype</div>
+					  </div>
+						 
+						 <!-- Common -->
+						  <div id="treasury-common" class="color-content active">
+							<div class="price-grid">
+							  <div class="price-item" data-pony-background="true">
+								<img src="images/treasuries/common/head_9.png" alt="head_9" onclick="selectItem('head', this.src)">
+							  </div>
+							  <div class="price-item" data-pony-background="true">
+								<img src="images/treasuries/common/head_10.png" alt="head_10" onclick="selectItem('head', this.src)">
+							  </div>
+							   <div class="price-item" data-pony-background="true">
+								<img src="images/treasuries/common/head_12.png" alt="head_12" onclick="selectItem('head', this.src)">
+							  </div>
+							  <div class="price-item" data-pony-background="alt">
+								<img src="images/treasuries/common/eyes_12.png" alt="eyes_12" onclick="selectItem('eyes', this.src)">
+							  </div>
+							  <div class="price-item" data-pony-background="alt">
+								<img src="images/treasuries/common/eyes_15.png" alt="eyes_15" onclick="selectItem('eyes', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/common/color_eyes_gift.png" alt="color_eyes_gift" onclick="selectItem('color-eyes', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/common/color_eyes_30.png" alt="color_eyes_gift" onclick="selectItem('color-eyes', this.src)">
+							  </div> 
+							  <div class="price-item">
+								<img src="images/treasuries/common/bow.png" alt="bow" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/common/bow_red.png" alt="bow_red" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/common/bow_white.png" alt="bow_white" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/common/bow_purple.png" alt="bow_purple" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/common/bow_black.png" alt="bow_black" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <div class="price-item" data-pony-background="alt">
+								<img src="images/treasuries/common/tail_gift_06.png" alt="tail_gift_06" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item" data-pony-background="alt">
+								<img src="images/treasuries/common/12.png" alt="12" onclick="selectItem('accessories', this.src, 'high-low-zindex')">
+							  </div>
+							  <!-- Добавьте больше предметов по необходимости -->
+							</div>
+						  </div>
+						  
+						  <!-- Uncommon -->
+						  <div id="treasury-uncommon" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/uncommon/tail_rainbow.png" alt="tail_rainbow" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/uncommon/mane_rainbow.png" alt="mane_rainbow" onclick="selectItem('mane', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/uncommon/tail_03.png" alt="tail_03" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/uncommon/mane_03.png" alt="mane_03" onclick="selectItem('mane', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/uncommon/tail_pinkie.png" alt="tail_pinkie" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/uncommon/mane_pinkie.png" alt="mane_pinkie" onclick="selectItem('mane', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/uncommon/tail_gift_05.png" alt="tail_gift_05" onclick="selectItem('tail', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/uncommon/mane_gift_05.png" alt="mane_gift_05" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <!-- Добавьте больше предметов -->
+							</div>
+						  </div>
+						  
+						  <!-- Rare -->
+						  <div id="treasury-rare" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/rare/tail_sky01.png" alt="tail_sky01" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_sky01.png" alt="mane_sky01" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/rare/tail_sky02.png" alt="tail_sky02" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/rare/mane_sky02.png" alt="mane_sky02" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/rare/tail_sky03.png" alt="tail_sky03" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_sky03.png" alt="mane_sky03" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/rare/tail_raspberry01.png" alt="tail_raspberry01" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_raspberry01.png" alt="mane_raspberry01" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/rare/tail_raspberry02.png" alt="tail_raspberry02" onclick="selectItem('tail', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/rare/mane_raspberry02.png" alt="mane_raspberry02" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/rare/tail_raspberry03.png" alt="tail_raspberry03" onclick="selectItem('tail', this.src, 'medium-zindex')">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_raspberry03.png" alt="mane_raspberry03" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_beans.png" alt="mane_beans" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_beans2.png" alt="mane_beans2" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_gift_06.png" alt="mane_gift_06" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/rare/mane_gift_06_2.png" alt="mane_gift_06_2" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/rare/accessories_sombra.png" alt="accessories_sombra" onclick="selectItem('accessories', this.src)">
+							  </div>
+							  <!-- Добавьте больше предметов -->
+							</div>
+						  </div>
+						  
+						  <!-- Mythical -->
+						  <div id="treasury-mythical" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/mythical/tail_night.png" alt="tail_night" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/mythical/mane_night.png" alt="mane_night" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							
+							  <div class="price-item">
+								<img src="images/treasuries/mythical/tail_chrysalis.png" alt="tail_hrysalis" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/mythical/mane_chrysalis.png" alt="mane_hrysalis" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/mythical/tail_capricorn.png" alt="tail_capricorn" onclick="selectItem('tail', this.src)">
+							  </div>
+
+							  <div class="price-item">
+								<img src="images/treasuries/mythical/mane_capricorn.png" alt="mane_capricorn" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/mythical/butterfly.png" alt="butterfly" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <!-- Добавьте больше предметов -->
+							</div>
+						  </div>
+						  
+						  <!-- Legendary -->
+						  <div id="treasury-legendary" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/legendary/tail_gift_07.png" alt="tail_gift_07" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/legendary/mane_gift_07.png" alt="mane_gift_07" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/legendary/tail_white_g21.png" alt="tail_white_g21" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/legendary/mane_white_g21.png" alt="mane_white_g21" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/legendary/tail_white_g22.png" alt="tail_white_g22" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/legendary/mane_white_g22.png" alt="mane_white_g22" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/legendary/tail_white_g23.png" alt="tail_white_g23" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/legendary/mane_white_g23.png" alt="mane_white_g23" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+
+							   <div class="price-item">
+								<img src="images/treasuries/legendary/mane_black01.png" alt="mane_black01" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <!-- Добавьте больше предметов -->
+							</div>
+						  </div>
+						  
+
+						  
+						  <!-- Immortal -->
+						  <div id="treasury-immortal" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/tail_gift_01.png" alt="tail_gift_01" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/immortal/mane_gift_01.png" alt="mane_gift_01" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/tail_gift_02.png" alt="tail_gift_02" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/mane_gift_02.png" alt="mane_gift_02" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/tail_gift_03.png" alt="tail_sgift_03" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/immortal/mane_gift_03.png" alt="mane_gift_03" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/immortal/tail_gift_04.png" alt="tail_sgift_04" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/immortal/mane_gift_04.png" alt="mane_gift_04" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/tail_thunderstorm.png" alt="tail_thunderstorm" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/immortal/mane_thunderstorm.png" alt="mane_thunderstorm" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/tail_thunderstorm2.png" alt="tail_thunderstorm2" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/mane_thunderstorm2.png" alt="mane_thunderstorm2" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/immortal/wings_03.png" alt="wings_03" onclick="selectItem('wings', this.src)">
+							  </div>
+							  		  <div class="price-item">
+								<img src="images/treasuries/immortal/wings_05.png" alt="wings_05" onclick="selectItem('wings', this.src)">
+							  </div>
+							  
+							  <!-- Добавьте больше предметов -->
+							</div>
+						  </div>
+						  
+						  <!-- Arcana -->
+						  <div id="treasury-arcana" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/arcana/tail_sombra.png" alt="tail_sombra" onclick="selectItem('tail', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/arcana/mane_sombra.png" alt="mane_sombra" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <!-- Добавьте больше предметов -->
+							</div>
+						  </div>
+						  
+						  <!-- Halloween -->
+						  <div id="treasury-halloween" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/halloween/accessories_halloween0.png" alt="accessories_halloween0" onclick="selectItem('accessories', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/halloween/tail_halloween2.png" alt="tail_halloween2" onclick="selectItem('tail', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/halloween/mane_halloween1.png" alt="mane_halloween1" onclick="selectItem('mane', this.src, 'medium-zindex')">
+							  </div>
+							  <div class="price-item" data-pony-background="alt">
+								<img src="images/treasuries/halloween/eyes_halloween3.png" alt="eyes_halloween3" onclick="selectItem('eyes', this.src)">
+							  </div>
+							   <div class="price-item" data-pony-background="alt">
+								<img src="images/treasuries/halloween/eyes_halloween4.png" alt="eyes_halloween4" onclick="selectItem('eyes', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/halloween/hats_halloween5.png" alt="hats_halloween5" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+							  <!-- Добавить больше предметов -->
+							</div>
+						  </div>
+						  
+						   <!-- Valentine's day -->
+						  <div id="treasury-valentine" class="color-content">
+							<div class="price-grid">
+							  <div class="price-item">
+								<img src="images/treasuries/valentine/feb14_1.png" alt="feb14_1" onclick="selectItem('accessories', this.src)">
+							  </div>
+							  <div class="price-item">
+								<img src="images/treasuries/valentine/feb14_2.png" alt="feb14_2" onclick="selectItem('hats', this.src)">
+							  </div>
+							   <div class="price-item">
+								<img src="images/treasuries/valentine/feb14_3.png" alt="feb14_3" onclick="selectItem('accessories', this.src)">
+							  </div>
+							  <!-- Добавить больше предметов -->
+							</div>
+						  </div>
+						  
+						  <!-- Twitch Hype -->
+						  <div id="treasury-twitch-hype" class="color-content">
+							<div class="price-grid">
+
+							<div class="price-item">
+								<img src="images/treasuries/hype/amanita.png" alt="amanita" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+
+							<div class="price-item">
+								<img src="images/treasuries/hype/grumpy_cat.png" alt="grumpy_cat" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+
+							<div class="price-item">
+								<img src="images/treasuries/hype/krusty_krab.png" alt="krusty_krab" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+
+							<div class="price-item">
+								<img src="images/treasuries/hype/kuromi.png" alt="kuromi" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+
+							<div class="price-item">
+								<img src="images/treasuries/hype/smurf.png" alt="smurf" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+
+							<div class="price-item">
+								<img src="images/treasuries/hype/dovahkiin.png" alt="dovahkiin" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							</div>
+
+
+							  <div class="price-item">
+								<img src="images/treasuries/hype/clothes_elite_knight_armor.png" alt="clothes_elite_knight_armor" onclick="selectItem('clothes', this.src)">
+							  </div>
+							  
+							  <div class="price-item">
+								<img src="images/treasuries/hype/hats_iron_helm.png" alt="hats_iron_helm" onclick="selectItem('hats', this.src, 'hight-zindex')">
+							  </div>
+
+							<!-- Добавить дальше предметы -->
+							</div>
+						  </div>
+					</div>
+                </div>
+            </div>
+            
+            <!-- ====== СЕКЦИЯ "УПРАВЛЕНИЕ" ====== -->
+            <div id="controls" class="section">
+                <div class="section-title">
+                    <h2>Управление</h2>
+                </div>
+                <div class="description-content">
+                    <p>В разделе Actions вы можете управлять своим аватаром во время стрима.
+					Для удобства рекомендую нажать кнопку «В отдельном окне» — так управлять будет гораздо комфортнее.</p>
+                    
+                    <p>Вы можете двигаться влево и вправо, прыгать, танцевать, бросать бомбы и выполнять другие действия.
+Есть и взаимодействия с другими зрителями — например, атаковать или обнять, но для этого нужно указать цель (таргет).</p>
+                    
+                    <p>И да, все действия можно выполнять не только через панель, но и прямо в чате с помощью команд через !</p>
+
+					<div class="details-images">
+						<img src="images/other/step3.png" alt="Управление">
+					</div>
+                </div>
+            </div>
+            
+            <!-- ====== СЕКЦИЯ "КОМАНДЫ" ====== -->
+            <div id="commands" class="section">
+                <div class="section-title">
+                    <h2>Команды</h2>
+                </div>
+                
+                <div class="commands-list">
+                    <div class="command-item">
+                        <div class="command-title">!commands</div>
+                        <div class="command-description">Ссылка на все команды (более широкий список команд)</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!leaderboard</div>
+                        <div class="command-description">Список 5-ти лидеров</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!gold</div>
+                        <div class="command-description">Показать количество голды</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!gold give [ник] 500</div>
+                        <div class="command-description">Дать 500 голды пользователю</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!gold add all 500</div>
+                        <div class="command-description">Дать всем активным пользователям 500 голды</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!duel [ник] 20</div>
+                        <div class="command-description">Вызвать на дуэль за 20 монет. Победитель получает 40</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!bet</div>
+                        <div class="command-description">Доступные варианты для ставок</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!bet 10 red</div>
+                        <div class="command-description">Поставить 10 на красное</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!slots 50</div>
+                        <div class="command-description">Играть в игровой автомат со ставкой 50</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!jump</div>
+                        <div class="command-description">Действие: прыжок</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!sit</div>
+                        <div class="command-description">Действие: сидеть</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!stand</div>
+                        <div class="command-description">Действие: встать</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!left 20</div>
+                        <div class="command-description">Двигать аватар влево на 20% ширины экрана</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!right 40</div>
+                        <div class="command-description">Двигать аватар вправо на 40% ширины экрана</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!attack [ник]</div>
+                        <div class="command-description">Действие: атаковать пользователя</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!dance</div>
+                        <div class="command-description">Действие: танцевать</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!fart</div>
+                        <div class="command-description">Действие: пукнуть >.<</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!hug [ник]</div>
+                        <div class="command-description">Действие: обнять пользователя</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!bomb</div>
+                        <div class="command-description">Действие: Заложить бомбу</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!bomb [ник]</div>
+                        <div class="command-description">Действие: Заложить бомбу под пользователя</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!random</div>
+                        <div class="command-description">Случайная экипировка</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!sling 80</div>
+                        <div class="command-description">Бросить аватара под углом 80</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!sling -75 100</div>
+                        <div class="command-description">Бросить аватара под углом -75 с силой 100</div>
+                    </div>
+                </div>
+                
+                <h3 class="mod-commands-title">Команды модераторов</h3>
+                <div class="commands-list">
+                    <div class="command-item">
+                        <div class="command-title">!battle</div>
+                        <div class="command-description">Устроить королевскую битву</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!spawn game</div>
+                        <div class="command-description">Создать мини-игру со Звездочкой</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!basketball</div>
+                        <div class="command-description">Запустить игру "Баскетбол"</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!mass !jump</div>
+                        <div class="command-description">Заставить всех прыгнуть</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!mass !bomb</div>
+                        <div class="command-description">Вызвать дождь из бомб</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!mass !attack random</div>
+                        <div class="command-description">Случайные атаки между пользователями</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!mass !sling random random</div>
+                        <div class="command-description">Бросить всех пользователей со случайными углами и силой</div>
+                    </div>
+                    <div class="command-item">
+                        <div class="command-title">!spawn [name]</div>
+                        <div class="command-description">Создать аватара с указанным именем</div>
+                    </div>
+					<div class="command-item">
+                        <div class="command-title">!throw [ник] [ник]</div>
+                        <div class="command-description">Бросьте свой аватар, а выбранный аватар в другого.</div>
+                    </div>
+					<div class="command-item">
+                        <div class="command-title">!throw [ник] 0.5</div>
+                        <div class="command-description">Бросьте свой аватар вместе с выбранным в указанное место (0 0,5 — правая сторона экрана).</div>
+                    </div>
+					<div class="command-item">
+                        <div class="command-title">!screensaver 30</div>
+                        <div class="command-description">Превратить всех пони в экранную заставку на 30 секунд.</div>
+                    </div>
+					<div class="command-item">
+                        <div class="command-title">!firework [ник]</div>
+                        <div class="command-description">Превратить пони в фейерверк.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ====== СЕКЦИЯ "БОССЫ" ====== -->
+            <div id="bosses" class="section">
+                <div class="section-title">
+                    <h2>Битва с боссом</h2>
+                </div>
+                <div class="description-content">
+                    <p>Стример призывает босса, в чате появляется уведомление, и сражение начинается прямо во время трансляции.</p>
+					<p>Чтобы вступить в бой, выберите один из семи классов:
+					<span class="minigame-command">Лучник</span>
+					<span class="minigame-command">Друид</span>
+					<span class="minigame-command">Бард</span>
+					<span class="minigame-command">Призыватель</span>
+					<span class="minigame-command">Жрец</span>
+					<span class="minigame-command">Маг</span>
+					<span class="minigame-command">Воин</span>.</p>
+					<p>После победы каждый участник получает награду.</p>
+						<!-- ====================================== -->
+						<!-- 🔥 ВСТАВЛЯЕМ БЛОК КЛАССОВ ВОТ ЗДЕСЬ 🔥 -->
+						<!-- ====================================== -->
+
+						<div class="boss-classes">
+
+							<!-- ===== КЛАСС 1 ===== -->
+							<div class="boss-class">
+								<h4>Лучник 🏹</h4>
+
+								<div class="command-item">
+									<span class="command-title">!лучник</span>
+									<div class="command-description">
+										Вступить в бой как лучник.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!стрела</span>
+									<div class="command-description">
+										Через ход наносит большой урон.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!вихрь</span>
+									<div class="command-description">
+										2-3 выстрела по 3-4 физ. урона каждый ход (5 ходов). 
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!метка</span>
+									<div class="command-description">
+										Накладывает метку, во время действия которой нужно нанест 80 урона, чтобы удвоить урон, иначе 35 урона (4 хода).
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+							<!-- ===== КЛАСС 2 ===== -->
+							<div class="boss-class">
+								<h4>Друид 🌿</h4>
+
+								<div class="command-item">
+									<span class="command-title">!друид</span>
+									<div class="command-description">
+										Вступить в бой как друид.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!медведь</span>
+									<div class="command-description">
+										Наносит 30-35 физ. урона. +60% максимального хп и исцеления (10 ходов).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!восстановление</span>
+									<div class="command-description">
+										Исцеляет команду на 9 здоровья каждый ход (5 ходов).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!трент @ник</span>
+									<div class="command-description">
+										Призывает маленького трента для себя или союзника. Трент наносит 60% урона от полученного исцеления.
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+							<!-- ===== КЛАСС 3 ===== -->
+							<div class="boss-class">
+								<h4>Бард 🎵</h4>
+
+								<div class="command-item">
+									<span class="command-title">!бард</span>
+									<div class="command-description">
+										Вступить в бой как бард.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!насмешка</span>
+									<div class="command-description">
+										Наносит 25-35 маг. урона, снижая защиту на 20% (12 ходов).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!ода</span>
+									<div class="command-description">
+										Отдать свой ход и 16% урона (4 хода).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!песня</span>
+									<div class="command-description">
+										Исцеляет союзников на 16-27 единиц и дает +16% урона (4 хода).
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+							<!-- ===== КЛАСС 4 ===== -->
+							<div class="boss-class">
+								<h4>Призыватель 🌀</h4>
+
+								<div class="command-item">
+									<span class="command-title">!призыватель</span>
+									<div class="command-description">
+										Вступить в бой как призыватель.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!призыв @ник</span>
+									<div class="command-description">
+										Призывает себе или выбранному союзнику существо, которое наносит 7 физ. урона (24 Хода).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!яд</span>
+									<div class="command-description">
+										Отравляет. Наносит 8-14 ед. яда и снижает исцеление на 50% (15 ходов).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!вампиризм</span>
+									<div class="command-description">
+										Вампиризм 50% от наносимого урона для союзников (15 ходов).
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+							<!-- ===== КЛАСС 5 ===== -->
+							<div class="boss-class">
+								<h4>Жрец ✨</h4>
+
+								<div class="command-item">
+									<span class="command-title">!жрец</span>
+									<div class="command-description">
+										Вступить в бой как жрец.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!сражение</span>
+									<div class="command-description">
+										Наносит 15-25 урона и исцеляет союзников на 7-9 ед.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!лечение @ник</span>
+									<div class="command-description">
+										Исцелить выбранного союзника на 48-67 ед.,  остальных союзников на 5-7 ед.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!фокус</span>
+									<div class="command-description">
+										Увеличивает весь урон союзников на 32% (15 ходов).
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+
+							<!-- ===== КЛАСС 6 ===== -->
+							<div class="boss-class">
+								<h4>Маг 🔮</h4>
+
+								<div class="command-item">
+									<span class="command-title">!маг</span>
+									<div class="command-description">
+										Вступить в бой как маг.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!огонь</span>
+									<div class="command-description">
+										Наносит 18-23 урона + 5 ожога (5 ходов).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!вода</span>
+									<div class="command-description">
+										Защищает союзников, снижая магический урон на 50% в течение 10 ходов.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!молния</span>
+									<div class="command-description">
+										Наносит 18-68 маг. урона, 50% шанс ударить себя на 30%.
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+
+							<!-- ===== КЛАСС 7 ===== -->
+							<div class="boss-class">
+								<h4>Воин ⚔</h4>
+
+								<div class="command-item">
+									<span class="command-title">!воин</span>
+									<div class="command-description">
+										Вступить в бой как воин.
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!крит</span>
+									<div class="command-description">
+										Наносит 28 урона (60 урона, если цель < 50% HP).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!страх</span>
+									<div class="command-description">
+										Снижает урон врага на 25% (14 ходов).
+									</div>
+								</div>
+
+								<div class="command-item">
+									<span class="command-title">!щит</span>
+									<div class="command-description">
+										Накладывает защиту на союзников и перенаправляет в себя 1 удар (-25% урона) (10 ходов).
+									</div>
+								</div>
+
+							</div>
+							<!-- ===== КОНЕЦ КЛАССА ===== -->
+
+
+						</div>
+                <div class="section-title">
+                    <h2>Боссы</h2>
+                </div>
+					<div class="bosses-grid">
+					<div class="boss-card">
+						<div class="boss-image-wrapper">
+							<img src="images/bosses/apollo.png" alt="Apollo">
+						</div>
+						<span>Apollo</span>
+					</div>
+
+					<div class="boss-card">
+						<div class="boss-image-wrapper">
+						<img src="images/bosses/bidoof.png" alt="Bidoof">
+						</div>
+						<span>Bidoof</span>
+					</div>
+
+
+
+					<div class="boss-card">
+						<div class="boss-image-wrapper">
+						<img src="images/bosses/gigantamax_charizard.png" alt="Gigantamax Charizard">
+						</div>
+						<span>Gigantamax Charizard</span>
+					</div>
+
+					<div class="boss-card">
+						<div class="boss-image-wrapper">
+						<img src="images/bosses/pumpkin_king.png" alt="Pumpkin King">
+						</div>
+						<span>Pumpkin King</span>
+					</div>
+
+					<div class="boss-card">
+						<div class="boss-image-wrapper">
+						<img src="images/bosses/trickmaster.png" alt="Trickmaster">
+						</div>
+						<span>Trickmaster</span>
+					</div>
+
+					<div class="boss-card">
+						<div class="boss-image-wrapper">
+						<img src="images/bosses/waterlily.png" alt="Waterlily">
+						</div>
+						<span>Waterlily</span>
+					</div>
+				</div>
+                </div>
+            </div>
+            
+            <!-- ====== СЕКЦИЯ "МИНИ-ИГРЫ" ====== -->
+            <div id="minigames" class="section">
+                <div class="section-title">
+                    <h2>Мини-игры</h2>
+                </div>
+                
+                <div class="minigames-grid">
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Boss Battle / Битва с боссом</h3>
+                        <div class="minigame-description">
+                            Призывается только стримером. Чтобы участвовать в битве, нужно выбрать один из семи классов: 
+                            <span class="minigame-command">Лучник</span>
+                            <span class="minigame-command">Друид</span> 
+                            <span class="minigame-command">Бард</span>
+							<span class="minigame-command">Призыватель</span>
+                            <span class="minigame-command">Жрец</span> 
+                            <span class="minigame-command">Маг</span>
+							<span class="minigame-command">Воин</span>
+							Управление осуществляется командами, описанными в разделе "Битва с боссом"
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Basketball / Баскетбол</h3>
+                        <div class="minigame-command">!basketball</div>
+                        <div class="minigame-description">
+                            Призывается модераторами или стримером. Сначала необходимо выбрать одну из двух команд. Для игры необходимо будет кидать свой аватар в корзину, появляющуюся на экране.
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Battle Royale / Королевская битва</h3>
+                        <div class="minigame-command">!battle</div>
+                        <div class="minigame-description">
+                            Призывается только модераторами или стримером. Битва насмерть с одним победителем. Участниками матча станут все зрители, чьи аватары были активными на момент запуска игры. Управление отсутствует.
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Duel & Wager / Дуэль</h3>
+                        <div class="minigame-command">!duel [оппонент] [сумма]</div>
+                        <div class="minigame-description">
+                            Вызов на дуэль с указанием суммы ставки. Управление отсутствует.
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Jump Catch Star / Поймать звезду</h3>
+						<span class="command-title">!jump</span>
+                        <div class="minigame-description">
+                            Лови звезду на экране с помощью прыжка. Звезда спавнится один раз в 45-60 минут. Награда: 150 голды.
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Roulette Gamble / Рулетка</h3>
+                        <div class="minigame-command">!bet [сумма] [red/black]</div>
+                        <div class="minigame-description">
+                            С помощью данной команды можно крутить рулетку на выбранную ставку с другими зрителями. Максимальная ставка: 1000. Азартные игры не одобряю >.<
+                        </div>
+                    </div>
+                    
+                    <div class="minigame-card">
+                        <h3 class="minigame-title">Slot Machine / Игровой автомат</h3>
+                        <div class="minigame-command">!slots [сумма]</div>
+                        <div class="minigame-description">
+                            Покрутить слоты. Доступно всем пользователям. Лудоманию не одобряю >.<
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 
+        ════════════════════════════════════════════════════════════════════════════════════════════════
+        📌 ПРАВОЕ МЕНЮ
+        ════════════════════════════════════════════════════════════════════════════════════════════════
+        
+        💡 КАК РЕДАКТИРОВАТЬ ПРАВОЕ МЕНЮ:
+        Просто отредактируйте текст внутри блоков .info-section и .new-avatar-section
+        -->
+        <div class="sidebar-right">
+            <div class="info-section">
+                <h2>Важно ǃ</h2>
+               <div class="info-slider">
+
+				<div class="info-slide active">
+					<p class="info-text">
+						Это демонстрационный редактор, а не полноценное приложение.
+						Здесь можно примерить предметы из расширения Stream Avatars,
+						доступные на моём канале.
+					</p>
+				</div>
+
+				<div class="info-slide">
+					<p class="info-text">
+						В разделах «Описание», «Управление» и «Команды»
+						вы найдёте подробную информацию о функционале расширения.
+					</p>
+				</div>
+
+				<div class="info-slide">
+					<p class="info-text">
+						Если вы сменили ник на Twitch — напишите мне,
+						чтобы сохранить баланс и статистику просмотра.
+					</p>
+				</div>
+
+				<div class="info-dots">
+					<span class="dot active" data-slide="0"></span>
+					<span class="dot" data-slide="1"></span>
+					<span class="dot" data-slide="2"></span>
+				</div>
+				<button class="info-arrow left">‹</button>
+				<button class="info-arrow right">›</button>
+			</div>
+		</div>
+            
+            <div class="new-avatar-section">
+                <h2>ANDY JOEY</h2>
+                <div class="new-avatar-preview">
+					<img src="images/other/dark_andy-joey.png" alt="Andy Joey">
+					<img src="images/other/andy-joey.png" class="avatar-hover" alt="Andy Joey Hover">
+				</div>
+                    <a href="https://www.twitch.tv/andy__joey" target="_blank" class="btn">
+						Twitch
+					</a>
+            </div>
+        </div>
+    </div>
+    <div class="image-lightbox" id="lightbox">
+    	<div class="lightbox-content">
+        <span class="remove-btn" id="lightbox-close">×</span>
+        <img src="" alt="preview">
+		</div>
+	</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
